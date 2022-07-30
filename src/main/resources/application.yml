@@ -1,0 +1,7 @@
+micronaut:
+  application:
+    name: jewelryStoreService
+netty:
+  default:
+    allocator:
+      max-order: 3
