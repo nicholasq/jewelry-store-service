@@ -17,7 +17,6 @@ dependencies {
     kapt("io.micronaut:micronaut-http-validation")
     kapt("io.micronaut.openapi:micronaut-openapi:4.4.3")
 
-
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
 
     implementation("io.micronaut:micronaut-http-client")
@@ -52,7 +51,7 @@ dependencies {
 
 
 application {
-    mainClass.set("jewelry.store.service.ApplicationKt")
+    mainClass.set("xyz.nicholasq.jss.ApplicationKt")
 }
 java {
     sourceCompatibility = JavaVersion.toVersion("17")
@@ -76,7 +75,7 @@ micronaut {
     testRuntime("junit5")
     processing {
         incremental(true)
-        annotations("jewelry.store.service.*")
+        annotations("xyz.nicholasq.jss.*")
     }
 }
 

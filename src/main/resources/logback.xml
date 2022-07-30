@@ -12,4 +12,7 @@
     <root level="info">
         <appender-ref ref="STDOUT" />
     </root>
+
+    <!--    todo: make a dev/prod version of logback.xml so we are not running debug in prod -->
+    <logger name="xyz.nicholasq.jss.*" level="debug" />
 </configuration>

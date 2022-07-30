@@ -1,4 +1,4 @@
-package jewelry.store.service
+package xyz.nicholasq.jss
 
 import io.micronaut.runtime.Micronaut.*
 
