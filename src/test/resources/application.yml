@@ -13,4 +13,4 @@ firestore:
 contact:
   collection: 'contact'
 gcloud:
-  project-id: ${GCLOUD_PROJECT_ID:`project-id`}
+  project-id: ${GCLOUD_PROJECT_ID:`test-project`}

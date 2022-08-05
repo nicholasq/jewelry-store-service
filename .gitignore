@@ -13,3 +13,4 @@ out/
 .classpath
 .factorypath
 micronaut-cli.yml
+*.private.env.json

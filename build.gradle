@@ -31,6 +31,9 @@ dependencies {
     implementation("io.micronaut.cache:micronaut-cache-caffeine")
     implementation("io.micronaut:micronaut-validation")
 
+    implementation platform('com.google.cloud:libraries-bom:26.0.0')
+    implementation 'com.google.cloud:google-cloud-firestore'
+
     implementation("io.swagger.core.v3:swagger-annotations")
 
     implementation("jakarta.annotation:jakarta.annotation-api")
@@ -38,10 +41,13 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-reflect:${kotlinVersion}")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:${kotlinVersion}")
 
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.13.3")
+
     runtimeOnly("ch.qos.logback:logback-classic")
     runtimeOnly("com.fasterxml.jackson.module:jackson-module-kotlin")
 
     testImplementation("org.testcontainers:junit-jupiter")
+    testImplementation("org.testcontainers:gcloud")
     testImplementation("org.testcontainers:mongodb")
     testImplementation("org.testcontainers:testcontainers")
 

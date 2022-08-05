@@ -1,0 +1,20 @@
+POST {{protocol}}{{host}}{{contact-api}}
+Content-Type: application/json
+
+{
+  "firstName": "John",
+  "lastName": "Doe",
+  "dateOfBirth": null,
+  "email": null,
+  "phone": null,
+  "address": null,
+  "company": null,
+  "jobTitle": null,
+  "notes": null
+}
+###
+
+DELETE {{protocol}}{{host}}{{contact-api}}/53
+
+###
+GET {{protocol}}{{host}}{{contact-api}}

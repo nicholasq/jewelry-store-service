@@ -13,7 +13,8 @@
         <appender-ref ref="STDOUT" />
     </root>
 
-    <!--    todo: make a dev/prod version of logback.xml so we are not running debug in prod -->
+    <!--    todo: make a dev/prod version of logback-test.xml so we are not running debug in prod -->
     <logger name="xyz.nicholasq.jss" level="debug" />
-    <logger name="io.micronaut.web" level="trace" />
+    <logger name="io.micronaut.http" level="trace" />
+    <logger name="io.micronaut.web" level="debug" />
 </configuration>
