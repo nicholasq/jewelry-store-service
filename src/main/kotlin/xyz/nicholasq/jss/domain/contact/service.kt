@@ -5,12 +5,12 @@ import xyz.nicholasq.jss.infrastructure.service.BaseCrudService
 import xyz.nicholasq.jss.infrastructure.service.CrudService
 import xyz.nicholasq.jss.infrastructure.service.Dto
 
-interface ContactService<K, T : Dto<K>> : CrudService<K, T>
+interface ContactService<T : Dto> : CrudService<T>
 
 @Singleton
 class DefaultContactService(
     contactRepository: ContactRepository,
-) : ContactService<String, Contact<String>> {
+) : ContactService<Contact> {
 
     // todo: maybe i should inject this service
     private val baseCrudService = BaseCrudService(
@@ -19,19 +19,19 @@ class DefaultContactService(
         entityToDtoTransformer = DefaultContactEntityToDtoTransformer()
     )
 
-    override suspend fun save(dto: Contact<String>): Contact<String> {
+    override suspend fun save(dto: Contact): Contact {
         return baseCrudService.save(dto)
     }
 
-    override suspend fun update(dto: Contact<String>): Contact<String> {
+    override suspend fun update(dto: Contact): Contact {
         return baseCrudService.update(dto)
     }
 
-    override suspend fun findById(id: String): Contact<String> {
+    override suspend fun findById(id: String): Contact {
         return baseCrudService.findById(id)
     }
 
-    override suspend fun findAll(): List<Contact<String>> {
+    override suspend fun findAll(): List<Contact> {
         return baseCrudService.findAll()
     }
 

@@ -4,7 +4,7 @@ import org.slf4j.LoggerFactory
 import xyz.nicholasq.jss.infrastructure.service.Dto
 import java.time.LocalDateTime
 
-interface EventPublisherService<K, T : Dto<K>> {
+interface EventPublisherService<K, T : Dto> {
     fun publishCreate(event: ServiceEvent<T>)
     fun publishUpdate(event: ServiceEvent<T>)
     fun publishDelete(event: ServiceEvent<T>)
@@ -27,7 +27,7 @@ enum class ServiceType {
 }
 
 // This class is temporary until I get around to implementing a pubsub version.
-abstract class AbstractFakeEventPublisherService<K, T : Dto<K>> : EventPublisherService<K, T> {
+abstract class AbstractFakeEventPublisherService<K, T : Dto> : EventPublisherService<K, T> {
 
     private val log = LoggerFactory.getLogger(this.javaClass)
 

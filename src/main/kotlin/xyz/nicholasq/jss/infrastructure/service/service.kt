@@ -3,12 +3,12 @@ package xyz.nicholasq.jss.infrastructure.service
 import jakarta.inject.Named
 import jakarta.inject.Singleton
 import xyz.nicholasq.jss.infrastructure.data.CrudRepository
-import xyz.nicholasq.jss.infrastructure.entity.Entity
+import xyz.nicholasq.jss.infrastructure.data.Entity
 import xyz.nicholasq.jss.infrastructure.logging.logger
 import xyz.nicholasq.jss.infrastructure.transformer.DtoToEntityTransformer
 import xyz.nicholasq.jss.infrastructure.transformer.EntityToDtoTransformer
 
-interface CrudService<K, T : Dto<K>> {
+interface CrudService<T : Dto> {
     suspend fun save(dto: T): T
     suspend fun update(dto: T): T
     suspend fun findById(id: String): T
@@ -18,11 +18,11 @@ interface CrudService<K, T : Dto<K>> {
 
 @Singleton
 @Named("baseCrudService")
-class BaseCrudService<K, T1 : Dto<K>, T2 : Entity<K>>(
-    private val repository: CrudRepository<K, T2>,
-    private val dtoToEntityTransformer: DtoToEntityTransformer<K, T1, T2>,
-    private val entityToDtoTransformer: EntityToDtoTransformer<K, T2, T1>
-) : CrudService<K, T1> {
+class BaseCrudService<T1 : Dto, T2 : Entity>(
+    private val repository: CrudRepository<T2>,
+    private val dtoToEntityTransformer: DtoToEntityTransformer<T1, T2>,
+    private val entityToDtoTransformer: EntityToDtoTransformer<T2, T1>
+) : CrudService<T1> {
 
     private val log = logger()
 
@@ -63,9 +63,9 @@ class BaseCrudService<K, T1 : Dto<K>, T2 : Entity<K>>(
     override suspend fun findAll(): List<T1> {
         log.debug("findAll()")
         val entities: List<T2> = repository.findAll()
-        val dtos: List<T1> = entities.map { entityToDtoTransformer.transform(it) }
-        log.debug("findAll() - dtos: $dtos")
-        return dtos
+        val dtoList: List<T1> = entities.map { entityToDtoTransformer.transform(it) }
+        log.debug("findAll() - dtoList: $dtoList")
+        return dtoList
     }
 
     override suspend fun delete(id: String): Boolean {

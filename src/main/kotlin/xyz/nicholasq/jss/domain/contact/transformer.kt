@@ -7,15 +7,15 @@ import xyz.nicholasq.jss.infrastructure.transformer.EntityToDtoTransformer
 import xyz.nicholasq.jss.infrastructure.transformer.UpdateCommandToDtoTransformer
 import java.time.ZonedDateTime
 
-interface ContactDtoToEntityTransformer<K> : DtoToEntityTransformer<K, Contact<K>, ContactEntity<K>>
-interface ContactEntityToDtoTransformer<K> : EntityToDtoTransformer<K, ContactEntity<K>, Contact<K>>
+interface ContactDtoToEntityTransformer : DtoToEntityTransformer<Contact, ContactEntity>
+interface ContactEntityToDtoTransformer : EntityToDtoTransformer<ContactEntity, Contact>
 
-interface ContactCreateCommandToDtoTransformer<K> : CreateCommandToDtoTransformer<K, CreateContactCommand, Contact<K>>
-interface ContactUpdateCommandToDtoTransformer<K> : UpdateCommandToDtoTransformer<K, UpdateContactCommand, Contact<K>>
+interface ContactCreateCommandToDtoTransformer : CreateCommandToDtoTransformer<CreateContactCommand, Contact>
+interface ContactUpdateCommandToDtoTransformer : UpdateCommandToDtoTransformer<UpdateContactCommand, Contact>
 
 @Singleton
-class DefaultContactDtoToEntityTransformer : ContactDtoToEntityTransformer<String> {
-    override fun transform(obj: Contact<String>): ContactEntity<String> {
+class DefaultContactDtoToEntityTransformer : ContactDtoToEntityTransformer {
+    override fun transform(obj: Contact): ContactEntity {
         return ContactEntity(
             id = null,
             firstName = obj.firstName,
@@ -32,9 +32,9 @@ class DefaultContactDtoToEntityTransformer : ContactDtoToEntityTransformer<Strin
 }
 
 @Singleton
-class DefaultContactEntityToDtoTransformer : ContactEntityToDtoTransformer<String> {
+class DefaultContactEntityToDtoTransformer : ContactEntityToDtoTransformer {
 
-    override fun transform(obj: ContactEntity<String>): Contact<String> {
+    override fun transform(obj: ContactEntity): Contact {
         return Contact(
             id = obj.id,
             firstName = obj.firstName,
@@ -51,8 +51,8 @@ class DefaultContactEntityToDtoTransformer : ContactEntityToDtoTransformer<Strin
 }
 
 @Singleton
-class DefaultContactCreateCommandToDtoTransformer : ContactCreateCommandToDtoTransformer<String> {
-    override fun transform(obj: CreateContactCommand): Contact<String> {
+class DefaultContactCreateCommandToDtoTransformer : ContactCreateCommandToDtoTransformer {
+    override fun transform(obj: CreateContactCommand): Contact {
         return Contact(
             id = null,
             firstName = obj.firstName,
@@ -69,8 +69,8 @@ class DefaultContactCreateCommandToDtoTransformer : ContactCreateCommandToDtoTra
 }
 
 @Singleton
-class DefaultContactUpdateCommandToDtoTransformer : ContactUpdateCommandToDtoTransformer<String> {
-    override fun transform(obj: UpdateContactCommand): Contact<String> {
+class DefaultContactUpdateCommandToDtoTransformer : ContactUpdateCommandToDtoTransformer {
+    override fun transform(obj: UpdateContactCommand): Contact {
         return Contact(
             id = null,
             firstName = obj.firstName,
@@ -84,4 +84,5 @@ class DefaultContactUpdateCommandToDtoTransformer : ContactUpdateCommandToDtoTra
             notes = obj.notes
         )
     }
+
 }

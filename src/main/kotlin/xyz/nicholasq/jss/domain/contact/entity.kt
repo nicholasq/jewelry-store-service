@@ -1,11 +1,11 @@
 package xyz.nicholasq.jss.domain.contact
 
 import io.micronaut.core.annotation.Introspected
-import xyz.nicholasq.jss.infrastructure.entity.Entity
+import xyz.nicholasq.jss.infrastructure.data.Entity
 
 @Introspected
-data class ContactEntity<K>(
-    override var id: K?,
+data class ContactEntity(
+    override var id: String?,
     val firstName: String?,
     val lastName: String?,
     val dateOfBirth: String?,
@@ -15,4 +15,4 @@ data class ContactEntity<K>(
     val company: String?,
     val jobTitle: String?,
     val notes: String?
-) : Entity<K>
+) : Entity

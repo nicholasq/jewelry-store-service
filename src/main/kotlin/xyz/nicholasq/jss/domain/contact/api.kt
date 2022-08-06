@@ -9,29 +9,30 @@ import xyz.nicholasq.jss.infrastructure.transformer.UpdateCommandToDtoTransforme
 
 @Controller("/api/v1/contacts")
 class ContactController(
-    contactService: ContactService<String, Contact<String>>,
-    createCommandTransformer: CreateCommandToDtoTransformer<String, CreateContactCommand, Contact<String>>,
-    updateCommandTransformer: UpdateCommandToDtoTransformer<String, UpdateContactCommand, Contact<String>>
+    contactService: ContactService<Contact>,
+    createCommandTransformer: CreateCommandToDtoTransformer<CreateContactCommand, Contact>,
+    updateCommandTransformer: UpdateCommandToDtoTransformer<UpdateContactCommand, Contact>
 ) {
 
     // maybe we should inject this
-    private val baseCrudController = BaseCrudController(contactService, createCommandTransformer, updateCommandTransformer)
+    private val baseCrudController =
+        BaseCrudController(contactService, createCommandTransformer, updateCommandTransformer)
 
     @Post("/")
     @Status(HttpStatus.CREATED)
-    suspend fun create(@Body createCommand: CreateContactCommand): Contact<String> {
+    suspend fun create(@Body createCommand: CreateContactCommand): Contact {
         return baseCrudController.create(createCommand)
     }
 
     @Get("/{id}")
     @Status(HttpStatus.OK)
-    suspend fun find(@PathVariable id: String): Contact<String> {
+    suspend fun find(@PathVariable id: String): Contact {
         return baseCrudController.find(id)
     }
 
     @Put("/{id}")
     @Status(HttpStatus.OK)
-    suspend fun update(@PathVariable id: String, @Body updateCommand: UpdateContactCommand): Contact<String> {
+    suspend fun update(@PathVariable id: String, @Body updateCommand: UpdateContactCommand): Contact {
         return baseCrudController.update(id, updateCommand)
     }
 
@@ -43,7 +44,7 @@ class ContactController(
 
     @Get("/")
     @Status(HttpStatus.OK)
-    suspend fun findAll(): List<Dto<String>> {
+    suspend fun findAll(): List<Dto> {
         return baseCrudController.findAll()
     }
 }

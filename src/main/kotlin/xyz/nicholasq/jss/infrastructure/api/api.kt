@@ -11,7 +11,7 @@ import xyz.nicholasq.jss.infrastructure.service.Dto
 import xyz.nicholasq.jss.infrastructure.transformer.CreateCommandToDtoTransformer
 import xyz.nicholasq.jss.infrastructure.transformer.UpdateCommandToDtoTransformer
 
-interface CrudController<K, T1 : CreateCommand, T2 : UpdateCommand, T3 : Dto<K>> {
+interface CrudController<T1 : CreateCommand, T2 : UpdateCommand, T3 : Dto> {
 
     suspend fun create(@Body createCommand: T1): T3
 
@@ -26,11 +26,11 @@ interface CrudController<K, T1 : CreateCommand, T2 : UpdateCommand, T3 : Dto<K>>
 
 @Singleton
 @Named("baseCrudController")
-class BaseCrudController<K, T1 : CreateCommand, T2 : UpdateCommand, T3 : Dto<K>>(
-    private val crudService: CrudService<K, T3>,
-    private val createCommandTransformer: CreateCommandToDtoTransformer<K, T1, T3>,
-    private val updateCommandTransformer: UpdateCommandToDtoTransformer<K, T2, T3>
-) : CrudController<K, T1, T2, Dto<K>> {
+class BaseCrudController<T1 : CreateCommand, T2 : UpdateCommand, T3 : Dto>(
+    private val crudService: CrudService<T3>,
+    private val createCommandTransformer: CreateCommandToDtoTransformer<T1, T3>,
+    private val updateCommandTransformer: UpdateCommandToDtoTransformer<T2, T3>
+) : CrudController<T1, T2, Dto> {
 
     private val log = logger()
 
@@ -64,10 +64,10 @@ class BaseCrudController<K, T1 : CreateCommand, T2 : UpdateCommand, T3 : Dto<K>>
         return if (deleted) HttpStatus.NO_CONTENT else HttpStatus.NOT_FOUND
     }
 
-    override suspend fun findAll(): List<Dto<K>> {
+    override suspend fun findAll(): List<Dto> {
         log.debug("findAll()")
-        val dtos = crudService.findAll()
-        log.trace("findAll() - dtos: $dtos")
-        return dtos
+        val dtoList = crudService.findAll()
+        log.trace("findAll() - dtoList: $dtoList")
+        return dtoList
     }
 }

@@ -10,8 +10,6 @@ import jakarta.inject.Named
 import jakarta.inject.Singleton
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.asExecutor
-import xyz.nicholasq.jss.domain.contact.ContactEntity
-import xyz.nicholasq.jss.infrastructure.entity.Entity
 import java.io.IOException
 import kotlin.coroutines.Continuation
 import kotlin.coroutines.resume
@@ -19,7 +17,7 @@ import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
 
 
-interface CrudRepository<K, T : Entity<K>> {
+interface CrudRepository<T : Entity> {
     suspend fun save(entity: T): T
     suspend fun update(entity: T): T
     suspend fun findById(id: String): T
@@ -29,37 +27,57 @@ interface CrudRepository<K, T : Entity<K>> {
 
 @Singleton
 @Named("baseFirestoreRepository")
-class BaseFirestoreCrudRepository(
+class BaseFirestoreCrudRepository<T : Entity>(
     firestoreDb: FirestoreDb,
     firestoreCollectionConfig: FirestoreCollectionConfiguration
-) : CrudRepository<String, ContactEntity<String>> {
+) : CrudRepository<T> {
 
     private val db = firestoreDb.db
     private val collectionName = firestoreCollectionConfig.collection
-
-    override suspend fun save(entity: ContactEntity<String>): ContactEntity<String> {
-        val id = db.collection(collectionName).document().id
-        entity.id = id
-        val item: ApiFuture<DocumentReference> = db.collection(collectionName).add(entity)
-        return item.await(entity::class.java)
-    }
-
-    override suspend fun update(entity: ContactEntity<String>): ContactEntity<String> {
+    override suspend fun save(entity: T): T {
         TODO("Not yet implemented")
     }
 
-    override suspend fun findById(id: String): ContactEntity<String> {
-        val docRef = db.collection(collectionName).document(id)
-        return docRef.get().await { it.toObject() }
+    override suspend fun update(entity: T): T {
+        TODO("Not yet implemented")
     }
 
-    override suspend fun findAll(): List<ContactEntity<String>> {
+    override suspend fun findById(id: String): T {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun findAll(): List<T> {
         TODO("Not yet implemented")
     }
 
     override suspend fun delete(id: String): Boolean {
         TODO("Not yet implemented")
     }
+
+    //    override suspend fun save(entity: Entity<String>): Entity<String> {
+//        val id = db.collection(collectionName).document().id
+//        entity.id = id
+//        val item: ApiFuture<DocumentReference> = db.collection(collectionName).add(entity)
+//        return item.await(entity::class.java)
+//    }
+//
+//    override suspend fun update(entity: Entity<String>): Entity<String> {
+//        TODO("Not yet implemented")
+//    }
+//
+//    override suspend fun findById(id: String): Entity<String> {
+//        val docRef = db.collection(collectionName).document(id)
+//        return docRef.get().await { it.toObject() }
+//    }
+//
+//    override suspend fun findAll(): List<Entity<String>> {
+//        TODO("Not yet implemented")
+//    }
+//
+//    override suspend fun delete(id: String): Boolean {
+//        TODO("Not yet implemented")
+//    }
+
 }
 
 private val objectMapper = jacksonObjectMapper()

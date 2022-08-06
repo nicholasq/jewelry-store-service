@@ -1,5 +1,5 @@
-package xyz.nicholasq.jss.infrastructure.entity
+package xyz.nicholasq.jss.infrastructure.data
 
-interface Entity<K> {
-    var id: K?
+interface Entity {
+    var id: String?
 }

@@ -41,7 +41,7 @@ class ContactControllerTest {
         firestoreEmulator.closeFirestoreDb()
     }
 
-    private var createdDto: Dto<String>? = null
+    private var createdDto: Dto? = null
 
     @Test
     @Order(1)
@@ -75,7 +75,7 @@ class ContactControllerTest {
             .body("notes", equalTo("Great customer"))
             .extract()
 
-        createdDto = response.`as`(Contact::class.java) as Dto<String>
+        createdDto = response.`as`(Contact::class.java) as Dto
     }
 
     @Test

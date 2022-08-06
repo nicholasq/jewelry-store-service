@@ -3,8 +3,8 @@ package xyz.nicholasq.jss.domain.contact
 import xyz.nicholasq.jss.infrastructure.service.Dto
 import java.time.ZonedDateTime
 
-data class Contact<T>(
-    override var id: T?,
+data class Contact(
+    override var id: String?,
     val firstName: String?,
     val lastName: String?,
     val dateOfBirth: ZonedDateTime?,
@@ -14,4 +14,4 @@ data class Contact<T>(
     val company: String?,
     val jobTitle: String?,
     val notes: String?
-) : Dto<T>
+) : Dto
